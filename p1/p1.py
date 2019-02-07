@@ -23,7 +23,7 @@ wc = 2.*np.pi*fc/fsps # Discrete radial frequency
 M = 400              # number of points in the kernel
 
 
-fil = "../C2--waveforms--00000.txt"
+fil = "../analysis/C2--waveforms--00000.txt"
 nhdr = 5
 (t,v,hdr) = rw(fil,nhdr)
 plt.plot(t,v)
