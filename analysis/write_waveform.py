@@ -2,7 +2,7 @@
 
 ################################################################
 # Fri Jan 25 21:31:15 EST 2019
-# 
+#
 # Read a waveform from a time,voltage CSV format
 #
 # Revision Log:
@@ -20,12 +20,13 @@ import os
 # Plot the data
 def write_waveform(x,y,fname,hdr):
     fout = open(fname,'w')
-    fout.write(hdr + '\n')
+    for entry in hdr:
+        fout.write(entry)
     for ix,iy in zip(x,y):
         line = '%f,%f\n' % (ix,iy)
         fout.write(line)
     fout.close()
-    
+
 
 ###############################################################
 # For testing
@@ -38,4 +39,3 @@ if __name__ == '__main__':
     x = range(1000)
     y = [np.random.normal(0,1.) for i in range(1000)]
     write_waveform(x,y,args.fname,args.hdr)
-    
