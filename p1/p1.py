@@ -55,29 +55,40 @@ lowpass = signal.firwin(numtaps, cutoff = wc/np.pi, window = 'blackman')    # bl
 
 j = 0
 k = 0
+h = 0
 for i in range(Nloops):
     fname = 'C:/watchman/data/20181212_watchman_spe/C2--waveforms--%05d.txt' % i
     spe_wname = 'C:/watchman/signal_chain_studies/d1/data/D1--waveforms--%05d.txt' % j
     spe_not_there = 'C:/watchman/signal_chain_studies/d1/not_spe/D1--noise--%05d.txt' % k
+    spe_unsure = 'C:/watchman/signal_chain_studies/d1/unsure_if_spe/D1--unsure--%05d.txt' % h
     if os.path.isfile(spe_wname):
         j = j + 1
     elif os.path.isfile(spe_not_there):
         k = k + 1
+    elif os.path.isfile(spe_unsure):
+        h += 1
     else:
         fil = open(fname)
         (t,v,hdr) = rw(fname,nhdr)
+
         y = signal.filtfilt(lowpass,1.0, v)
         y2 = y[numtaps:len(y)-1]
-        ty = t[numtaps:len(y)-1]
-        t2 = np.array([float('%.7E' % ti) for ti in ty])
+        t2 = t[numtaps:len(y)-1]
+
         plt.figure()
         plt.plot(t,v,'b')
-        plt.plot(t2,y2,'r',linewidth=2.5)
+        plt.plot(t2,y2,'r',linewidth = 2.5)
+
+        # print(f)
+        # plt.plot(t2,y2,'r',linewidth=2.5)
         plt.grid(True)
         print('Displaying file #%05d' % i)
-        plt.show()
+        plt.show(block = False)
+        plt.pause(1.5)
+        plt.close()
+
         spe_check = 'pre-loop initialization'
-        while spe_check != 'y' and spe_check != 'n':
+        while spe_check != 'y' and spe_check != 'n' and spe_check != 'u':
             spe_check = raw_input('Is there a visible SPE? "y" or "n"\n')
         if spe_check == 'y':
             # Write data file to processed SPE folder
@@ -86,24 +97,11 @@ for i in range(Nloops):
         elif spe_check == 'n':
             write_waveform(t2, y2, spe_not_there, hdr)
             k += 1
+        elif spe_check == 'u':
+            write_waveform(t2, y2, spe_unsure, hdr)
+            h += 1
         print('file #%05d: Done' % i)
 
-
-
-    # for j in range(5):
-    #     fil.readline()
-    #     n = np.array([])
-    #     x = np.array([])
-    #     y = np.array([])
-    #     ni = 0
-    # for line in fil:
-    #     print(line, type(line))
-    #     n = np.append(n, ni)
-    #     x = np.append(x, float(line.split(',')[0]))
-    #     y = np.append(y, float(line.split(',')[1]))
-    #     ni+=1
-        # print(x,y)
-        # time.sleep(1)
 
 
 

@@ -23,7 +23,7 @@ def write_waveform(x,y,fname,hdr):
     for entry in hdr:
         fout.write(entry)
     for ix,iy in zip(x,y):
-        line = '%f,%f\n' % (ix,iy)
+        line = '%.7E,%f\n' % (ix,iy)
         fout.write(line)
     fout.close()
 
