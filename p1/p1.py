@@ -54,19 +54,22 @@ lowpass = signal.firwin(numtaps, cutoff = wc/np.pi, window = 'blackman')    # bl
 # plt.show()
 
 j = 0
-k = 0
-h = 0
+# k = 0
+# h = 0
+j = 5000
 for i in range(Nloops):
-    fname = 'C:/watchman/data/20181212_watchman_spe/C2--waveforms--%05d.txt' % i
+    # print i
+
+    fname = 'C:/watchman/data/20181212_watchman_spe/C2--waveforms--%05d.txt' % j
     spe_wname = 'C:/watchman/signal_chain_studies/d1/data/D1--waveforms--%05d.txt' % j
-    spe_not_there = 'C:/watchman/signal_chain_studies/d1/not_spe/D1--noise--%05d.txt' % k
-    spe_unsure = 'C:/watchman/signal_chain_studies/d1/unsure_if_spe/D1--unsure--%05d.txt' % h
+    spe_not_there = 'C:/watchman/signal_chain_studies/d1/not_spe/D1--not_spe--%05d.txt' % j
+    spe_unsure = 'C:/watchman/signal_chain_studies/d1/unsure_if_spe/D1--unsure--%05d.txt' % j
     if os.path.isfile(spe_wname):
-        j = j + 1
+        pass
     elif os.path.isfile(spe_not_there):
-        k = k + 1
+        pass
     elif os.path.isfile(spe_unsure):
-        h += 1
+        pass
     else:
         fil = open(fname)
         (t,v,hdr) = rw(fname,nhdr)
@@ -75,32 +78,31 @@ for i in range(Nloops):
         y2 = y[numtaps:len(y)-1]
         t2 = t[numtaps:len(y)-1]
 
-        plt.figure()
-        plt.plot(t,v,'b')
-        plt.plot(t2,y2,'r',linewidth = 2.5)
 
         # print(f)
-        # plt.plot(t2,y2,'r',linewidth=2.5)
-        plt.grid(True)
-        print('Displaying file #%05d' % i)
-        plt.show(block = False)
-        plt.pause(1.5)
-        plt.close()
+        if min(y2[0:len(y2)-1-numtaps]) < -0.012:
 
-        spe_check = 'pre-loop initialization'
-        while spe_check != 'y' and spe_check != 'n' and spe_check != 'u':
-            spe_check = raw_input('Is there a visible SPE? "y" or "n"\n')
-        if spe_check == 'y':
-            # Write data file to processed SPE folder
-            write_waveform(t2, y2, spe_wname, hdr)
-            j += 1
-        elif spe_check == 'n':
-            write_waveform(t2, y2, spe_not_there, hdr)
-            k += 1
-        elif spe_check == 'u':
-            write_waveform(t2, y2, spe_unsure, hdr)
-            h += 1
-        print('file #%05d: Done' % i)
+            plt.figure()
+            plt.plot(t,v,'b')
+            plt.plot(t2,y2,'r',linewidth=2.5)
+            plt.grid(True)
+            print('Displaying file #%05d' % j)
+            plt.show(block = False)
+            plt.pause(1.5)
+            plt.close()
+            #
+            spe_check = 'pre-loop initialization'
+            while spe_check != 'y' and spe_check != 'n' and spe_check != 'u':
+                spe_check = raw_input('Is there a single visible SPE? "y" or "n"\n')
+            if spe_check == 'y':
+                # Write data file to processed SPE folder
+                write_waveform(t2, y2, spe_wname, hdr)
+            elif spe_check == 'n':
+                write_waveform(t2, y2, spe_not_there, hdr)
+            elif spe_check == 'u':
+                write_waveform(t2, y2, spe_unsure, hdr)
+            print('file #%05d: Done' % j)
+    j += 1
 
 
 
