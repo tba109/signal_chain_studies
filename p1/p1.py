@@ -56,7 +56,7 @@ lowpass = signal.firwin(numtaps, cutoff = wc/np.pi, window = 'blackman')    # bl
 j = 0
 # k = 0
 # h = 0
-j = 5000
+j = 7000
 for i in range(Nloops):
     # print i
 
@@ -83,8 +83,8 @@ for i in range(Nloops):
         if min(y2[0:len(y2)-1-numtaps]) < -0.012:
 
             plt.figure()
-            plt.plot(t,v,'b')
-            plt.plot(t2,y2,'r',linewidth=2.5)
+            plt.plot(t,v,'k')
+            plt.plot(t2,y2,'m',linewidth=2.5)
             plt.grid(True)
             print('Displaying file #%05d' % j)
             plt.show(block = False)
