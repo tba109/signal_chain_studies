@@ -40,7 +40,7 @@ lowpass = signal.firwin(numtaps, cutoff = wc/np.pi, window = 'blackman')    # bl
 # plt.grid(True)
 # plt.show()
 
-j = 47025
+j = 57000
 for i in range(j, Nloops):
     # print i
     p1_sort(i)
