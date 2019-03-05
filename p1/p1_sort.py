@@ -22,7 +22,7 @@ def p1_sort(fnum):
     lowpass = signal.firwin(numtaps, cutoff = wc/np.pi, window = 'blackman')    # blackman windowed lowpass filter
 
     fname = 'C:/watchman/data/20181212_watchman_spe/C2--waveforms--%05d.txt' % fnum
-    spe_wname = 'C:/watchman/signal_chain_studies/d1/data/D1--waveforms--%05d.txt' % fnum
+    spe_wname = 'C:/watchman/signal_chain_studies/d1/d1_raw/D1--waveforms--%05d.txt' % fnum
     spe_not_there = 'C:/watchman/signal_chain_studies/d1/not_spe/D1--not_spe--%05d.txt' % fnum
     spe_unsure = 'C:/watchman/signal_chain_studies/d1/unsure_if_spe/D1--unsure--%05d.txt' % fnum
     if os.path.isfile(spe_wname):
@@ -32,7 +32,6 @@ def p1_sort(fnum):
     elif os.path.isfile(spe_unsure):
         pass
     else:
-        fil = open(fname)
         (t,v,hdr) = rw(fname,nhdr)
 
         y = signal.filtfilt(lowpass,1.0, v)
@@ -59,7 +58,7 @@ def p1_sort(fnum):
                 # print('Displaying file #%05d' % fnum)
                 # plt.show()
                 write_waveform(t2, y2, spe_wname, hdr)
-                print(len(os.listdir('../d1/data/')))
+                print(len(os.listdir('../d1/d1_raw/')))
                 # print('1')
 
         else:
@@ -91,7 +90,7 @@ def p1_sort(fnum):
                         write_waveform(t2, y2, spe_unsure, hdr)
                     print('file #%05d: Done' % fnum)
                     # print('mean is %f' % np.mean(y2))
-                    print(len(os.listdir('../d1/data/')))
+                    print(len(os.listdir('../d1/d1_raw/')))
                     # print('2')
             else:
                 if min(y2[370:1370]) < -0.0115:
@@ -103,7 +102,7 @@ def p1_sort(fnum):
                     # print('Displaying file #%05d' % fnum)
                     # plt.show()
                     write_waveform(t2, y2, spe_wname, hdr)
-                    print(len(os.listdir('../d1/data/')))
+                    print(len(os.listdir('../d1/d1_raw/')))
                     # print('3')
 
     return
