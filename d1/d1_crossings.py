@@ -5,9 +5,11 @@ import matplotlib.pyplot as plt
 from read_waveform import read_waveform as rw
 import os
 
-Nloops = len(os.listdir('./d1_normalized/'))
+# Following SPE files from d1_cleaned don't meet necessary crossing time criteria: 00438, 01463, 02001, 06347, 07761, 08673, 09082
+
+Nloops = len(os.listdir('./d1_baseline_shifted/'))
 nhdr = 5
-j = 0
+j = 9083
 
 rising20_dist = np.array([])
 rising50_dist = np.array([])
@@ -19,9 +21,10 @@ falling80_dist = np.array([])
 
 for i in range(j,Nloops):
     print i
-    fname = 'C:/watchman/signal_chain_studies/d1/d1_normalized/D1--waveforms--%05d.txt' % i
+    fname = 'C:/watchman/signal_chain_studies/d1/d1_baseline_shifted/D1--waveforms--%05d.txt' % i
     # print(fname)
     (t,y,hdr) = rw(fname,nhdr)
+    y = y / min(y[370:1370])
     y_window = y[370:1370]
     t_window = t[370:1370]
     max_location = y == 1
@@ -101,7 +104,7 @@ for i in range(j,Nloops):
     # plt.plot([rising20, falling20],[y20_rise[0], y20_fall[0]],'ro')
     # plt.plot([rising50, falling50],[y50_rise[0], y50_fall[0]],'ro')
     # plt.plot([rising80, falling80],[y80_rise[0], y80_fall[0]],'ro')
-    #
+#
     # plt.grid(True)
     # plt.show()
 # fout_rising20 = 'rising20_dist.txt'

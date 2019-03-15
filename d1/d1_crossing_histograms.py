@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 
 def get_crossings(fname):
     dist = np.array([])
@@ -15,35 +16,19 @@ falling80_dist = get_crossings('falling80_dist.txt')
 rising20_dist = get_crossings('rising20_dist.txt')
 rising50_dist = get_crossings('rising50_dist.txt')
 rising80_dist = get_crossings('rising80_dist.txt')
-print(rising50_dist)
+# print(rising50_dist)
 
-# fin = open('falling20_dist.txt','r')
-# for line in fin:
-#     falling20_dist = np.append(falling20_dist, float(line.split(',')[0]))
-# fin.close()
-# print(falling20_dist)
-#
-# fin = open('falling50_dist.txt','r')
-# for line in fin:
-#     falling50_dist = np.append(falling50_dist, float(line.split(',')[0]))
-# fin.close()
-#
-# fin = open('falling80_dist.txt','r')
-# for line in fin:
-#     falling80_dist = np.append(falling80_dist, float(line.split(',')[0]))
-# fin.close()
-#
-# fin = open('rising20_dist.txt','r')
-# for line in fin:
-#     rising20_dist = np.append(rising20_dist, float(line.split(',')[0]))
-# fin.close()
-#
-# fin = open('rising50_dist.txt','r')
-# for line in fin:
-#     rising50_dist = np.append(rising50_dist, float(line.split(',')[0]))
-# fin.close()
-#
-# fin = open('rising80_dist.txt','r')
-# for line in fin:
-#     rising80_dist = np.append(rising80_dist, float(line.split(',')[0]))
-# fin.close()
+bin_num = 200
+fig = plt.figure(figsize=(6,4))
+plt.hist(rising20_dist,bins = bin_num)
+plt.hist(rising50_dist,bins = bin_num)
+plt.hist(rising80_dist,bins = bin_num)
+plt.hist(falling80_dist,bins = bin_num)
+plt.hist(falling50_dist,bins = bin_num)
+plt.hist(falling20_dist,bins = bin_num)
+plt.title('Histogram of crossing times relative to the maximum peak point')#,fontsize = 18)
+plt.xlabel('Time [s]')#,fontsize = 18)
+plt.ylabel('Count')#,fontsize = 18)
+plt.legend(['r20','r50','r80','f80','f50','f20'])
+fig.savefig('C:/Users/Andrew Blount/Desktop/Histograms.png',dpi = 300)
+plt.show()
