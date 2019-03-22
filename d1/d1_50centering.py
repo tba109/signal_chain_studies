@@ -29,11 +29,7 @@ for i in range(j,Nloops):
     t_new = t - t_50    # Shifting t_50 to t = 0s
     t_50centered = np.roll(t_new, center_index - index_50)  # Rolling the data vectors to allign along a common point
     y_50centered = np.roll(y, center_index - index_50)
-    if i == 0:
-        y_stack = y_50centered
-    if i != 0:
-        y_stack = np.vstack([y_stack, y_50centered])
-    write_waveform(t_50centered, y_50centered, wname, hdr)
+    # write_waveform(t_50centered, y_50centered, wname, hdr)
 
     # index50_dist = np.append(index50_dist, index_50)
     # print index50_dist
